@@ -17,6 +17,8 @@ import com.example.desafio_backend.entity.User;
 import com.example.desafio_backend.repository.UserRepository;
 import com.example.desafio_backend.service.UserService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -27,6 +29,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
     
+    @Operation(summary = "Create new user")
     @PostMapping("/signup")
     public ResponseEntity<User> createUser(@RequestBody User body) {
         
@@ -39,6 +42,7 @@ public class UserController {
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Get all users")
     @GetMapping("/users")
     public ResponseEntity<List<UserDTO>> getUsers() {
         List<UserDTO> users = userService.getUsers();

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.desafio_backend.dto.TransferRequestDTO;
 import com.example.desafio_backend.service.WalletService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/api/wallet")
 public class WalletController {
@@ -18,6 +20,7 @@ public class WalletController {
     @Autowired
     private WalletService walletService;
 
+    @Operation(summary = "Transfer funds")
     @PostMapping("/transfer")
     public ResponseEntity<String> transferFunds(@RequestBody TransferRequestDTO transferRequest) {
         try {
