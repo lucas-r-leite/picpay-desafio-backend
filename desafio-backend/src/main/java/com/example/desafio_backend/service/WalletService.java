@@ -1,5 +1,8 @@
 package com.example.desafio_backend.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -57,5 +60,15 @@ public class WalletService {
 
         walletRepository.save(payerWallet);
         walletRepository.save(payeeWallet);
+
+        // Send notification after successful transfer
+    Map<String, Object> notifyRequest = new HashMap<>();
+    notifyRequest.put("payerId", payerId);
+    notifyRequest.put("payeeId", payeeId);
+    notifyRequest.put("value", value);
+    notifyRequest.put("message", "Transfer works");
+
+    String notifyUrl = "https://util.devi.tools/api/v1/notify";
+    restTemplate.postForObject(notifyUrl, notifyRequest, Void.class);
     }
 }
