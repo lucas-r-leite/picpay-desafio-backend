@@ -31,6 +31,12 @@ public class WalletService {
 
     @Transactional
     public void transferFunds(Float value, Long payerId, Long payeeId) {
+        if (value == null || payerId == null || payeeId == null) {
+            throw new IllegalArgumentException("Invalid arguments");
+        }
+        if (value <= 0) {
+            throw new IllegalArgumentException("Value must be greater than zero");
+        }
         User payer = userRepository.findById(payerId)
                 .orElseThrow(() -> new UserNotFoundException("Payer not found"));
         User payee = userRepository.findById(payeeId)

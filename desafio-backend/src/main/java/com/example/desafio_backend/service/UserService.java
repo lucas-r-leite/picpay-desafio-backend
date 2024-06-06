@@ -40,12 +40,19 @@ public class UserService {
         wallet.setBalance(10.0f);
         walletRepository.save(wallet);
 
+        //establishes a relationship between the userSaved object and the wallet object, indicating that the wallet belongs to the userSaved
+        userSaved.setWallet(wallet);
+
         return userSaved;
     }
 
 
     private UserDTO convertToDTO(User user) {
-        WalletDTO walletDTO = new WalletDTO(user.getWallet().getId(), user.getWallet().getBalance());
+        //Null check is needed to ensure that the walletDTO is only created if the wallet field is not null.
+        WalletDTO walletDTO = null;
+        if (user.getWallet()!= null) {
+            walletDTO = new WalletDTO(user.getWallet().getId(), user.getWallet().getBalance());
+        }
         return new UserDTO(
             user.getId(),
             user.getName(),
